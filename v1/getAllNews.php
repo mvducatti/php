@@ -4,15 +4,19 @@ require_once '../includes/DBOperations.php';
 
 $response = array(); 
 
-if($_SERVER['REQUEST_METHOD']=='GET'){
+    if($_SERVER['REQUEST_METHOD']=='GET'){
         $db = new DBOperations();         
-        $user = $db->getAllNews();
+        $news = $db->getAllNews();
+        
+        $response['error'] = false;
+        $response['news'] =  $news;
 
-            
-        }else{
-            $response['error'] = true; 
-            $response['message'] = "Usuario ou senha incorretos, por favor verifique novamente";          
-        }
+    }else{
+        $response['error'] = true; 
+        $response['message'] = "Error ao tentar carregar lista!";          
+    }
+
+echo json_encode($response);
 
 
-//echo json_encode($response);
+ 
