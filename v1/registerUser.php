@@ -32,11 +32,12 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                 Se o problema persistir procure o CTI";          
             }elseif($result == 0){
                 $response['error'] = true; 
-                $response['message'] = "Essa conta ja esta cadastrada, por favor escolha outro usuario e(ou) email";                     
+                $response['message'] = "Essa conta ja esta cadastrada, por favor escolha outro usuario ou email";                     
             }
 
         }else {
-            $response['message'] = "$email is not a valid email address";
+            $response['error'] = true;
+            $response['message'] = "$email não é um email válido";
         }
     }
     }else{

@@ -54,18 +54,15 @@ class DBOperations{
     public function getAllNews(){
         $stmt = $this->con->prepare("SELECT news_post FROM news");
         $stmt->execute();
-        /* bind result variables */
-        $stmt->bind_result($news_post);
-        $arrayNews = array();                   
-        /* fetch values */
-        while ($stmt->fetch()) {
-            $arrayNews[] = $news_post;
-        }
-        /* close statement */
-        $stmt->close();
-
-        return $arrayNews;
-
+            /* bind result variables */
+                $stmt->bind_result($news_post);
+            /* fetch values */
+            while ($stmt->fetch()) {
+                printf ("%s\t", $news_post);
+            }
+            /* close statement */
+            $stmt->close();
+        
     }
 
     public function getUserByUsername($username){

@@ -20,7 +20,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             $response['username'] = $user['username'];
         }else{
             $response['error'] = true; 
-            $response['message'] = "Usuario ou senha incorretos, por favor verifique novamente";          
+            $response['message'] = "Usuario ou senha incorretos, por favor verifique se os dados estão corretos";          
         }
     }
 }
