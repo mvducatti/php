@@ -5,8 +5,8 @@ $response = array();
         $db = new DBOperations();         
         $news = $db->getAllNews();
         
-        $response['error'] = false;
         $response['news'] =  $news;
+
     }else{
         $response['error'] = true; 
         $response['message'] = "Error ao tentar carregar lista!";          
