@@ -32,9 +32,9 @@ class DBOperations{
         }
     }
 
-    public function registerNews($news_post, $user_FK){      
-        $stmt = $this->con->prepare("INSERT INTO `news` (`news_id`, `news_post`, `user_FK`) VALUES (NULL, ?, ?);");
-        $stmt->bind_param("ss",$news_post,$user_FK);       
+    public function registerItems($product_name, $product_price, $product_origin, $product_status, $user_fk){      
+        $stmt = $this->con->prepare("INSERT INTO `product` (`news_id`, `product_name`, `product_price`, `product_origin`, `product_status`, `flag_visible`, `user_fk`) VALUES (NULL, ?, ?, ?, ?, 1, ?);");
+        $stmt->bind_param("sssss",$product_name, $product_price, $product_origin, $product_status, $user_fk);
 
         if($stmt->execute()){
             return 1; 
@@ -51,7 +51,7 @@ class DBOperations{
         return $stmt-> num_rows > 0;
     }
 
-    public function getAllNews(){
+    public function getAllItems(){
         $stmt = $this->con->prepare("SELECT news_id, news_post FROM news");
         $stmt->execute();
         /* bind result variables */
