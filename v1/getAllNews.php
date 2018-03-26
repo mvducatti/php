@@ -3,9 +3,9 @@ require_once '../includes/DBOperations.php';
 $response = array(); 
     if($_SERVER['REQUEST_METHOD']=='GET'){
         $db = new DBOperations();         
-        $products = $db->getAllItems();
+        $news = $db->getAllNews();
         
-        $response['products'] =  $products;
+        $response['news'] =  $news;
 
     }else{
         $response['error'] = true; 

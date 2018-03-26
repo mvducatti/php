@@ -33,8 +33,8 @@ class DBOperations{
     }
 
     public function registerItems($product_name, $product_price, $product_origin, $product_status, $user_fk){      
-        $stmt = $this->con->prepare("INSERT INTO `product` (`news_id`, `product_name`, `product_price`, `product_origin`, `product_status`, `flag_visible`, `user_fk`) VALUES (NULL, ?, ?, ?, ?, 1, ?);");
-        $stmt->bind_param("sssss",$product_name, $product_price, $product_origin, $product_status, $user_fk);
+        $stmt = $this->con->prepare("INSERT INTO `product` (`product_id`, `product_name`, `product_price`, `product_origin`, `product_status`, `flag_visible`, `user_fk`) VALUES (NULL, ?, ?, ?, ?, 1, ?);");
+        $stmt->bind_param("sissi",$product_name, $product_price, $product_origin, $product_status, $user_fk);
 
         if($stmt->execute()){
             return 1; 
@@ -52,24 +52,30 @@ class DBOperations{
     }
 
     public function getAllItems(){
-        $stmt = $this->con->prepare("SELECT news_id, news_post FROM news");
+        $stmt = $this->con->prepare("SELECT product_id, product_name, product_price, product_origin, product_status, flag_visible, user_fk FROM product WHERE flag_visible = 1");
         $stmt->execute();
         /* bind result variables */
-        $stmt->bind_result($news_id,$news_post);
-        $arrayNews = array();                   
+        $stmt->bind_result($product_id,$product_name, $product_price, $product_origin, $product_status, $flag_visible, $user_fk);
+        $arrayProducts = array();                   
         /* fetch values */
         while ($stmt->fetch()) {
 
             $temp = array();
-            $temp['id'] = $news_id; 
-            $temp['noticia'] = $news_post; 
+            $temp['product_id'] = $product_id;
+            $temp['product_name'] = $product_name;
+            $temp['product_price'] = $product_price; 
+            $temp['product_origin'] = $product_origin;
+            $temp['product_status'] = $product_status;
+            $temp['flag_visible'] = $flag_visible; 
+            $temp['user_fk'] = $user_fk;  
+
              
-            array_push($arrayNews, $temp);
+            array_push($arrayProducts, $temp);
 
         }
         /* close statement */
         $stmt->close();
-        return $arrayNews;
+        return $arrayProducts;
     }
 
     public function getUserByUsername($username){
