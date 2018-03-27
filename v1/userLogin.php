@@ -18,7 +18,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             $response['id'] = $user['id'];
             $response['email'] = $user['email'];
             $response['username'] = $user['username'];
-            $response['password'] = $user['password'];
+            $response['password'] = $user['password'];  
         }else{
             $response['error'] = true; 
             $response['message'] = "Usuario ou senha incorretos, por favor verifique se os dados estão corretos";          
