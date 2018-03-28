@@ -12,7 +12,7 @@
     $product_price = $_POST['product_price'];
     $user_fk = $_POST['user_fk'];
 
-        if(empty($product_name) || empty($product_price) || empty($user_fk)){
+        if(empty($product_name) || empty($product_price)){
         $response['error'] = true; 
         $response['message'] = "Por favor preencha todos os campos";
     } else {

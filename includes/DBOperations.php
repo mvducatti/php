@@ -34,7 +34,7 @@ class DBOperations{
 
     public function registerItems($product_name, $product_price, $product_origin, $product_status, $user_fk){      
         $stmt = $this->con->prepare("INSERT INTO `product` (`product_id`, `product_name`, `product_price`, `product_origin`, `product_status`, `flag_visible`, `user_fk`) VALUES (NULL, ?, ?, ?, ?, 1, ?);");
-        $stmt->bind_param("sissi",$product_name, $product_price, $product_origin, $product_status, $user_fk);
+        $stmt->bind_param("sissi", $product_name, $product_price, $product_origin, $product_status, $user_fk);
 
         if($stmt->execute()){
             return 1; 
@@ -43,9 +43,9 @@ class DBOperations{
         }
     }
 
-    public function userLogin($username, $password){
-        $stmt = $this->con->prepare("SELECT id FROM users WHERE username = ? AND password = ?");
-        $stmt->bind_param("ss", $username,$password);
+    public function userLogin($email, $password){
+        $stmt = $this->con->prepare("SELECT id FROM users WHERE email = ? AND password = ?");
+        $stmt->bind_param("ss", $email,$password);
         $stmt->execute();
         $stmt->store_result();
         return $stmt-> num_rows > 0;
@@ -96,14 +96,15 @@ class DBOperations{
         $arrayProducts = array();                   
         /* fetch values */
         while ($stmt->fetch()) {
-
+            
+            
             $temp = array();
             $temp['product_id'] = $product_id;
             $temp['product_name'] = $product_name;
             $temp['product_price'] = $product_price; 
             $temp['product_origin'] = $product_origin;
             $temp['product_status'] = $product_status;
-            $temp['flag_visible'] = $flag_visible; 
+            $temp['flag_visible'] =  $flag_visible; 
             $temp['user_fk'] = $user_fk;  
 
              
@@ -115,9 +116,10 @@ class DBOperations{
         return $arrayProducts;
     }
 
-    public function getUserByUsername($username){
-        $stmt = $this->con->prepare("SELECT * FROM users WHERE username = ?");
-        $stmt->bind_param("s",$username);
+
+    public function getUserByUsername($email){
+        $stmt = $this->con->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->bind_param("s",$email);
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
