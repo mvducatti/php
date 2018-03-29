@@ -55,6 +55,28 @@ class DBOperations{
         }
     }
 
+    public function sellProduct ($product_id){      
+        $stmt = $this->con->prepare("UPDATE product SET selling_status = 1 WHERE product_id = ?");
+        $stmt->bind_param("i", $product_id);
+
+        if($stmt->execute()){
+            return 1; 
+        }else{
+            return 2; 
+        }
+    }
+
+    public function cancelReservation ($product_id){      
+        $stmt = $this->con->prepare("UPDATE product SET buyer_id = null WHERE product_id = ?");
+        $stmt->bind_param("i", $product_id);
+
+        if($stmt->execute()){
+            return 1; 
+        }else{
+            return 2; 
+        }
+    }
+
     public function userLogin($email, $password){
         $stmt = $this->con->prepare("SELECT id FROM users WHERE email = ? AND password = ?");
         $stmt->bind_param("ss", $email,$password);
@@ -92,7 +114,67 @@ class DBOperations{
         /* close statement */
         $stmt->close();
         return $arrayProducts;
-}
+    }
+
+    public function myBoughtItems($buyer_fk){
+        $stmt = $this->con->prepare("SELECT product_id, product_name, product_price, product_origin, product_status, selling_status, 
+        buyer_id FROM product WHERE buyer_id = ? AND selling_status = 1");
+        $stmt->bind_param("i", $buyer_fk);
+        $stmt->execute();
+        /* bind result variables */
+        $stmt->bind_result($product_id,$product_name, $product_price, $product_origin, $product_status, 
+            $selling_status, $seller_fk);
+        $arrayProducts = array();                   
+        /* fetch values */
+        while ($stmt->fetch()) {
+            $temp = array();
+            $temp['comprador'] = $buyer_fk;
+            $temp['vendedor'] = $seller_fk;
+            $temp['product_id'] = $product_id;
+            $temp['product_name'] = $product_name;
+            $temp['product_price'] = $product_price; 
+            $temp['product_origin'] = $product_origin;
+            $temp['product_status'] = $product_status;
+            
+            array_push($arrayProducts, $temp);
+
+        }
+
+        /* close statement */
+        $stmt->close();
+        return $arrayProducts;
+    }
+
+    public function mySoldItems($buyer_fk){
+        $stmt = $this->con->prepare("SELECT product_id, product_name, product_price, product_origin, product_status, selling_status, 
+        buyer_id FROM product WHERE seller_fk = ? AND buyer_id IS NOT NULL AND selling_status = 1");
+        $stmt->bind_param("i", $buyer_fk);
+        $stmt->execute();
+        /* bind result variables */
+        $stmt->bind_result($product_id,$product_name, $product_price, $product_origin, $product_status, 
+            $selling_status, $seller_fk);
+        $arrayProducts = array();                   
+        /* fetch values */
+        while ($stmt->fetch()) {
+            $temp = array();
+            $temp['comprador'] = $buyer_fk;
+            $temp['vendedor'] = $seller_fk;
+            $temp['product_id'] = $product_id;
+            $temp['product_name'] = $product_name;
+            $temp['product_price'] = $product_price; 
+            $temp['product_origin'] = $product_origin;
+            $temp['product_status'] = $product_status;
+             
+            array_push($arrayProducts, $temp);
+    
+        }
+    
+        /* close statement */
+        $stmt->close();
+        return $arrayProducts;
+    }
+
+
 
 
     public function getMyReservations($buyer_fk){

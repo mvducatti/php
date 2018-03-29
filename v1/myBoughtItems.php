@@ -10,11 +10,11 @@ require_once '../includes/DBOperations.php';
 
 		if(empty($buyer_fk)){
 			$response['error'] = true;
-			$response['message'] = "Nenhum produto reservado";
+			$response['message'] = "Nenhum produto comprado";
 		}else{
 
 			$db = new DBOperations();
-			$products = $db->getMyReservations($buyer_fk);
+			$products = $db->myBoughtItems($buyer_fk);
 
 			$response['products'] = $products;
 		}
