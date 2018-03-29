@@ -10,7 +10,7 @@
     $product_origin = $_POST['product_origin'];
     $product_status = $_POST['product_status'];
     $product_price = $_POST['product_price'];
-    $user_fk = $_POST['user_fk'];
+    $seller_fk = $_POST['seller_fk'];
 
         if(empty($product_name) || empty($product_price)){
         $response['error'] = true; 
@@ -19,7 +19,8 @@
 
         $db = new DBOperations(); 
      
-            $result = $db->registerItems($_POST['product_name'], $_POST['product_price'], $_POST['product_origin'], $_POST['product_status'], $_POST['user_fk']);
+            $result = $db->registerItems($_POST['product_name'], $_POST['product_price'], $_POST['product_origin'], 
+            $_POST['product_status'], $_POST['seller_fk']);
 
             if($result == 1 ){
                 $response['error'] = false; 
