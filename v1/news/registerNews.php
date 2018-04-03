@@ -1,6 +1,6 @@
     <?php 
      
-    require_once '../includes/DBOperations.php';
+    require_once '../../includes/DBNewsOperations.php';
      
     $response = array(); 
      
@@ -14,7 +14,7 @@
         $response['message'] = "Por favor preencha todos os campos";
     } else {
 
-        $db = new DBOperations(); 
+        $db = new DBNewsOperations(); 
      
             $result = $db->registerNews($_POST['news_post'], $_POST['user_FK']);
             if($result == 1 ){

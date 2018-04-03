@@ -1,27 +1,24 @@
 <?php 
 
-require_once '../includes/DBOperations.php';
+require_once '../../includes/DBUserOperations.php';
 
 $response = array(); 
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
 
+    $user_profile_pic = $_POST['user_profile_pic'];
     $username = $_POST['username'];
     $password = $_POST['password'];
     $email = $_POST['email'];
 
-    if(empty($username) || empty($password) || empty($email)){
-        $response['error'] = true; 
+    if(empty($username) || empty($email) || empty($password)){
+        $response['error'] = true;
         $response['message'] = "Por favor preencha todos os campos";
-
     }else{  
-
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
-
-            $db = new DBOperations(); 
-
-            $result = $db->createUser($_POST['username'], $_POST['password'], $_POST['email']);
+            $db = new DBUserOperations(); 
+            $result = $db->createUser($_POST['user_profile_pic'], $_POST['username'], $_POST['email'], $_POST['password']);
 
             if($result == 1){
                 $response['error'] = false; 

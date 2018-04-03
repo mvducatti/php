@@ -1,8 +1,13 @@
 <?php 
-require_once '../includes/DBOperations.php';
+
+require_once '../../includes/DBNewsOperations.php';
+
 $response = array(); 
+
     if($_SERVER['REQUEST_METHOD']=='GET'){
-        $db = new DBOperations();         
+
+        $db = new DBNewsOperations();        
+         
         $news = $db->getAllNews();
         
         $response['news'] =  $news;

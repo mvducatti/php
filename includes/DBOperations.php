@@ -17,20 +17,20 @@ class DBOperations{
     
     /*CRUD -> C -> CREATE */
     
-    public function createUser($username, $password, $email){
-        if($this->isUserRegistered($username,$email)){
-            return 0; 
-        }else{
-            $stmt = $this->con->prepare("INSERT INTO `users` (`id`, `username`, `password`, `email`) VALUES (NULL, ?, ?, ?);");
-            $stmt->bind_param("sss",$username,$password,$email);
+    // public function createUser($username, $password, $email){
+    //     if($this->isUserRegistered($username,$email)){
+    //         return 0; 
+    //     }else{
+    //         $stmt = $this->con->prepare("INSERT INTO `users` (`id`, `username`, `password`, `email`) VALUES (NULL, ?, ?, ?);");
+    //         $stmt->bind_param("sss",$username,$password,$email);
             
-            if($stmt->execute()){
-                return 1; 
-            }else{
-                return 2; 
-            }
-        }
-    }
+    //         if($stmt->execute()){
+    //             return 1; 
+    //         }else{
+    //             return 2; 
+    //         }
+    //     }
+    // }
 
     public function registerNews($news_post, $user_FK){      
         $stmt = $this->con->prepare("INSERT INTO `news` (`news_id`, `news_post`, `user_FK`) VALUES (NULL, ?, ?);");
@@ -43,13 +43,13 @@ class DBOperations{
         }
     }
 
-    public function userLogin($username, $password){
-        $stmt = $this->con->prepare("SELECT id FROM users WHERE username = ? AND password = ?");
-        $stmt->bind_param("ss", $username,$password);
-        $stmt->execute();
-        $stmt->store_result();
-        return $stmt-> num_rows > 0;
-    }
+    // public function userLogin($username, $password){
+    //     $stmt = $this->con->prepare("SELECT id FROM users WHERE username = ? AND password = ?");
+    //     $stmt->bind_param("ss", $username,$password);
+    //     $stmt->execute();
+    //     $stmt->store_result();
+    //     return $stmt-> num_rows > 0;
+    // }
 
     public function getAllNews(){
         $stmt = $this->con->prepare("SELECT news_id, news_post FROM news");
@@ -72,20 +72,20 @@ class DBOperations{
         return $arrayNews;
     }
 
-    public function getUserByUsername($username){
-        $stmt = $this->con->prepare("SELECT * FROM users WHERE username = ?");
-        $stmt->bind_param("s",$username);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_assoc();
-    }
+    // public function getUserByUsername($username){
+    //     $stmt = $this->con->prepare("SELECT * FROM users WHERE username = ?");
+    //     $stmt->bind_param("s",$username);
+    //     $stmt->execute();
+    //     return $stmt->get_result()->fetch_assoc();
+    // }
 
     
-    private function isUserRegistered($username, $email){
-        $stmt = $this->con->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
-        $stmt->bind_param("ss", $username, $email);
-        $stmt->execute(); 
-        $stmt->store_result(); 
-        return $stmt->num_rows > 0; 
-    }
+    // private function isUserRegistered($username, $email){
+    //     $stmt = $this->con->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
+    //     $stmt->bind_param("ss", $username, $email);
+    //     $stmt->execute(); 
+    //     $stmt->store_result(); 
+    //     return $stmt->num_rows > 0; 
+    // }
     
 }
