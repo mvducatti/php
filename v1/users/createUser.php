@@ -11,7 +11,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $password = $_POST['password'];
     $email = $_POST['email'];
 
-    if(empty($username) || empty($email) || empty($password)){
+    if(empty($username) || empty($email) || empty($password) || empty($user_profile_pic)){
         $response['error'] = true;
         $response['message'] = "Por favor preencha todos os campos";
     }else{  

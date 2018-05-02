@@ -27,17 +27,18 @@ class DBNewsOperations{
     }
 
     public function getAllNews(){
-        $stmt = $this->con->prepare("SELECT news_id, news_post FROM news");
+        $stmt = $this->con->prepare("SELECT news_id, news_post, news_poster, FROM news");
         $stmt->execute();
         /* bind result variables */
-        $stmt->bind_result($news_id, $news_post);
+        $stmt->bind_result($news_id, $news_post, $news_poster);
         $arrayNews = array();                   
         /* fetch values */
         while ($stmt->fetch()) {
 
             $temp = array();
-            $temp['id'] = $news_id; 
-            $temp['noticia'] = $news_post; 
+            $temp['news_id'] = $news_id; 
+            $temp['news_post'] = $news_post; 
+            $temp['news_poster'] = $news_poster;
              
             array_push($arrayNews, $temp);
 

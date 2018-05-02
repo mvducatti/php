@@ -19,17 +19,12 @@ class DBUserOperations{
         if($this->isUserRegistered($email)){
             return 0; 
         }else{
-
-            $path = "userpictures/$id.png";
-            $actualpath = "http://localhost:8080/android/$path";
             
-            $stmt = $this->con->prepare("INSERT INTO users (user_id, user_profile_pic, username, email, password, 
-            user_date_created) VALUES (NULL, $actualpath, ?, ?, ?, NOW() );"); 
+            $stmt = $this->con->prepare("INSERT INTO users (user_profile_pic, username, email, password, 
+            user_date_created) VALUES (?, ?, ?, ?, NOW() );"); 
             $stmt->bind_param("ssss", $user_profile_pic, $username, $email, $password);
+
             if($stmt->execute()){
-
-                file_put_contents($path, base64_decode($user_profile_pic));
-
                 return 1;
             }else{
                 return 2; 

@@ -17,9 +17,9 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         if($db->userLogin($_POST['email'], $_POST['password'])){
             $user = $db->getUserByEmail($_POST['email']);
             $response['error'] = false; 
-            $response['id'] = $user['id'];
+            $response['user_id'] = $user['user_id'];
             $response['email'] = $user['email'];
-            $response['username'] = $user['username'];
+            $response['message'] = "Login Efetuado com sucesso!"; 
         }else{
             $response['error'] = true; 
             $response['message'] = "Email ou senha incorretos, por favor verifique se os dados estão corretos";          
