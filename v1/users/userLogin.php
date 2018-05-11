@@ -19,6 +19,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             $response['error'] = false; 
             $response['user_id'] = $user['user_id'];
             $response['email'] = $user['email'];
+            $response['name'] = $user['username'];
+            $response['photo'] = $user['user_profile_pic'];
             $response['message'] = "Login Efetuado com sucesso!"; 
         }else{
             $response['error'] = true; 
