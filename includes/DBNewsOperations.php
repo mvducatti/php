@@ -16,7 +16,8 @@ class DBNewsOperations{
     }
 
     public function registerNews($news_post, $user_FK){    
-        $stmt = $this->con->prepare("INSERT INTO news (news_id, news_post, user_FK) VALUES (NULL, ?, ?);");
+        $stmt = $this->con->prepare("INSERT INTO news (news_id, news_post, news_date_created, news_poster) 
+            VALUES (NULL, ?, NOW(), ?);");
         $stmt->bind_param("ss", $news_post, $user_FK);       
 
         if($stmt->execute()){

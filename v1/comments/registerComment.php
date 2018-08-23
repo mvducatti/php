@@ -1,22 +1,24 @@
     <?php 
      
-    require_once '../../includes/DBNewsOperations.php';
+    require_once '../../includes/DBOComments.php';
      
     $response = array(); 
      
     if($_SERVER['REQUEST_METHOD']=='POST'){
 
-    $news_post = $_POST['news_post'];
-    $user_FK = $_POST['user_FK'];
+    $comment_text = $_POST['comment_text'];
+    $comment_poster = $_POST['comment_poster'];
+    $comment_newsid = $_POST['comment_newsid'];
 
-        if(empty($news_post) || empty($user_FK)){
+        if(empty($comment_text) || empty($comment_poster) || empty($comment_newsid)){
         $response['error'] = true; 
         $response['message'] = "Por favor preencha todos os campos";
+
     } else {
 
-        $db = new DBNewsOperations(); 
+        $db = new DBOComments();
      
-            $result = $db->registerNews($_POST['news_post'], $_POST['user_FK']);
+            $result = $db->registerComment($_POST['comment_text'], $_POST['comment_poster'], $_POST['comment_newsid']);
             if($result == 1 ){
                 $response['error'] = false; 
                 $response['message'] = "Noticia Registrada com sucesso";
