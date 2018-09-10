@@ -15,10 +15,16 @@ class DBNewsOperations{
         
     }
 
-    public function registerNews($news_post, $user_FK){    
-        $stmt = $this->con->prepare("INSERT INTO news (news_id, news_post, news_date_created, news_poster) 
-            VALUES (NULL, ?, NOW(), ?);");
-        $stmt->bind_param("ss", $news_post, $user_FK);       
+    public function registerNews($news_post, $news_picture, $user_FK, $news_group){  
+
+        //Mudar o valor para nulo quando os dados vindo do aplicativo forem nulos
+        if ($news_picture == ""){
+            $news_picture = null;
+        }
+
+        $stmt = $this->con->prepare("INSERT INTO news (news_post, news_picture, news_date_created, news_poster, news_group) 
+            VALUES (?, ?, NOW(), ?, ?);");
+        $stmt->bind_param("ssss", $news_post, $news_picture, $user_FK, $news_group);       
 
         if($stmt->execute()){
             return 1; 
@@ -28,13 +34,13 @@ class DBNewsOperations{
     }
 
     public function getAllNews(){
-        $stmt = $this->con->prepare("SELECT `news_id`, `news_post`, `news_date_created`, `news_poster`, 
+        $stmt = $this->con->prepare("SELECT `news_id`, `news_post`, `news_picture`, `news_date_created`, `news_poster`, 
         users.user_profile_pic, users.username, users.email  
         FROM `news` 
         INNER JOIN users on news.news_poster = users.user_id");
         $stmt->execute();
         /* bind result variables */
-        $stmt->bind_result($news_id, $news_post, $news_date_created, $news_poster, 
+        $stmt->bind_result($news_id, $news_post, $news_picture, $news_date_created, $news_poster, 
         $users_user_profile_pic, $users_username, $users_email);
         $arrayNews = array();                   
         /* fetch values */
@@ -42,7 +48,8 @@ class DBNewsOperations{
 
             $temp = array();
             $temp['news_id'] = $news_id; 
-            $temp['news_post'] = $news_post; 
+            $temp['news_post'] = $news_post;
+            $temp['news_picture'] = $news_picture; 
             $temp['news_poster'] = $news_poster;
             $temp['news_date_created'] = $news_date_created;
             $temp['users.username'] = $users_username;

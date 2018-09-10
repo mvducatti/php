@@ -7,7 +7,9 @@
     if($_SERVER['REQUEST_METHOD']=='POST'){
 
     $news_post = $_POST['news_post'];
+    $news_picture = $_POST['news_picture'];
     $user_FK = $_POST['user_FK'];
+    $news_group = $_POST['news_group'];
 
         if(empty($news_post) || empty($user_FK)){
         $response['error'] = true; 
@@ -16,7 +18,7 @@
 
         $db = new DBNewsOperations(); 
      
-            $result = $db->registerNews($_POST['news_post'], $_POST['user_FK']);
+            $result = $db->registerNews($_POST['news_post'], $_POST['news_picture'], $_POST['user_FK'], $_POST['news_group']);
             if($result == 1 ){
                 $response['error'] = false; 
                 $response['message'] = "Noticia Registrada com sucesso";

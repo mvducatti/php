@@ -12,7 +12,6 @@ class DBOComments{
         $db = new DBConnect();
         
         $this->con = $db->connect();
-        
     }
 
     public function registerComment($comment_text, $comment_poster, $comment_newsid){      
